@@ -443,3 +443,7 @@ var NODES = {
     ]
   }
 };
+
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = { NODES: NODES, START: START };
+}

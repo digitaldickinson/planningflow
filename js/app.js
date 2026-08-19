@@ -279,41 +279,12 @@
   }
 
   /* =========================================================
-     THE WHOLE MAP
-     ========================================================= */
-
-  function buildMap() {
-    var seen = {};
-    function walk(id, edgeLabel) {
-      var node = NODES[id];
-      if (!node) return "";
-      var li = "<li>";
-      if (edgeLabel) li += '<span class="edge">' + esc(edgeLabel) + " → </span>";
-      if (seen[id]) {
-        li += '<span class="rev">' + esc(shortLabel(node)) + " (as above)</span></li>";
-        return li;
-      }
-      seen[id] = true;
-      if (node.type === "end") {
-        li += '<span class="t ' + node.kind + '">' + esc(node.title) + "</span></li>";
-        return li;
-      }
-      li += '<span class="q">' + esc(node.q || node.eyebrow || id) + "</span>";
-      li += "<ul>";
-      if (node.type === "step") {
-        li += walk(node.to, "then");
-      } else {
-        node.options.forEach(function (o) { li += walk(o.to, o.label); });
-      }
-      li += "</ul></li>";
-      return li;
-    }
-    return "<ul>" + walk(START, null) + "</ul>";
-  }
-
-  /* =========================================================
      WIRING
      ========================================================= */
+  /* Note: #map-body ships its content statically in index.html so the
+     decision tree is readable without JS. Regenerate that markup with
+     `node tools/generate-map.js` after editing js/data.js — it isn't
+     rebuilt at runtime. */
 
   document.getElementById("btn-restart").addEventListener("click", restart);
   document.getElementById("btn-back").addEventListener("click", back);
@@ -326,13 +297,12 @@
   });
   nbNotes.addEventListener("input", function () { state.notes = nbNotes.value; });
 
-  document.getElementById("btn-map").addEventListener("click", function () {
+  var btnMap = document.getElementById("btn-map");
+  mapSection.classList.add("hidden");
+  btnMap.addEventListener("click", function () {
     var open = mapSection.classList.toggle("hidden") === false;
     this.setAttribute("aria-pressed", String(open));
     this.textContent = open ? "Hide the map" : "Show the whole map";
-    if (open && !document.getElementById("map-body").innerHTML) {
-      document.getElementById("map-body").innerHTML = buildMap();
-    }
   });
 
   document.addEventListener("keydown", function (e) {
