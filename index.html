@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Finding a planning or licensing story — walkthrough</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <h1>Finding a planning or licensing story</h1>
+    <p class="kicker">Answer the questions. The tool routes you — it does not do the reporting.</p>
+    <div class="toolbar">
+      <button id="btn-restart" type="button">Start again</button>
+      <button id="btn-back" type="button">Back</button>
+      <button id="btn-map" type="button" aria-pressed="false">Show the whole map</button>
+    </div>
+    <ol class="trail" id="trail" aria-label="Path so far"></ol>
+  </header>
+
+  <div class="cols">
+    <main>
+      <div class="stage" id="stage" tabindex="-1" aria-live="polite"></div>
+
+      <section class="map hidden" id="map">
+        <h2>Every path in this tool</h2>
+        <p class="kicker">The wizard hides the terrain. This is the terrain.</p>
+        <div id="map-body"></div>
+      </section>
+
+      <section class="notes">
+        <h2>Checked before this went on the page</h2>
+        <ul>
+          <li>Licensing Act 2003 site notices must legally be pale blue, A4 or larger, displayed for 28 consecutive days — a statutory requirement, not house style. <a href="https://gazetted.co.uk/blog/premises-licence-application-public-notice" target="_blank" rel="noopener">Source</a></li>
+          <li>Planning site notices have no nationally mandated colour — white/yellow is common practice, not law — and the statutory minimum display/comment period is 21 days, though it varies by council and application type. <a href="https://www.walthamforest.gov.uk/planning-and-building-control/planning-applications/telling-you-about-planning-applications" target="_blank" rel="noopener">Source</a></li>
+          <li>PlanningAlerts.app covers 9 of Greater Manchester's 10 boroughs — Salford is the one missing. No aggregator exists for licensing agendas; each borough's Modern.gov calendar has to be checked separately.</li>
+          <li>planningprecedent.co.uk's full-text appeal search is free with no login; planning.data.gov.uk is useful for verifying designations (listed building, conservation area, greenbelt) but does not track live applications, appeals, or licensing.</li>
+          <li>A breach of planning control is defined in s171A of the Town and Country Planning Act 1990 as either carrying out development without the required permission, <em>or</em> failing to comply with a condition or limitation attached to a permission granted. Contravening the limits or conditions of permitted development rights under the GPDO 2015 is also a breach. <a href="https://www.gov.uk/guidance/enforcement-and-post-permission-matters" target="_blank" rel="noopener">Source — MHCLG planning practice guidance</a></li>
+          <li>Enforcement time limits (s171B, as amended by s115 of the Levelling-up and Regeneration Act 2023, in force 25 April 2024, England only): 10 years where operational development was substantially completed on or after 25 April 2024, or an unauthorised change of use to a single dwellinghouse took place on or after that date; 4 years where either took place before it. Other breaches, including condition breaches, 10 years. <a href="https://www.gov.uk/guidance/enforcement-and-post-permission-matters" target="_blank" rel="noopener">Source</a></li>
+          <li>Licensing Act 2003 s8: each licensing authority must keep a register of premises licences, club premises certificates, personal licences and temporary event notices, must make the entries available for inspection by any person during office hours without payment, and must supply a copy of an entry on request — for which it may charge a reasonable fee. <a href="https://www.legislation.gov.uk/ukpga/2003/17/section/8" target="_blank" rel="noopener">Source — legislation.gov.uk</a></li>
+        </ul>
+      </section>
+
+      <footer>Interactive walkthrough — North West / Greater Manchester context, but the logic travels.</footer>
+    </main>
+
+    <aside class="notebook" aria-label="Notebook">
+      <h2>Notebook</h2>
+      <div id="nb-body"></div>
+      <label class="sr" for="nb-notes">Your own notes</label>
+      <textarea id="nb-notes" class="nb-notes" placeholder="Names, dates, who you rang, what they said."></textarea>
+      <div class="nb-foot">
+        <button id="btn-copy" type="button">Copy notebook</button>
+        <button id="btn-clear" type="button">Clear</button>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
