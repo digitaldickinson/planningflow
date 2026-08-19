@@ -5,6 +5,7 @@
 
   var stage = document.getElementById("stage");
   var trailEl = document.getElementById("trail");
+  var trailHint = document.getElementById("trail-hint");
   var nbBody = document.getElementById("nb-body");
   var nbNotes = document.getElementById("nb-notes");
   var mapSection = document.getElementById("map");
@@ -53,6 +54,7 @@
       html += "</span></button>";
     });
     html += "</div>";
+    html += '<div class="step-nav">' + stepNavHtml() + "</div>";
     stage.innerHTML = html;
 
     Array.prototype.forEach.call(stage.querySelectorAll(".opt"), function (btn) {
@@ -60,6 +62,7 @@
         choose(node.options[Number(btn.dataset.i)]);
       });
     });
+    wireStepNav();
   }
 
   function renderStep(node) {
@@ -81,7 +84,10 @@
       });
       html += "</div>";
     }
+    html += '<div class="step-nav">';
     html += '<button class="primary" type="button" id="btn-next">Next</button>';
+    html += stepNavHtml();
+    html += "</div>";
     stage.innerHTML = html;
 
     document.getElementById("btn-next").addEventListener("click", function () {
@@ -91,6 +97,17 @@
       });
       choose({ label: "Done", to: node.to });
     });
+    wireStepNav();
+  }
+
+  function stepNavHtml() {
+    if (!state.path.length) return "";
+    return '<button class="back-inline" type="button" id="btn-back-inline">&larr; Back</button>';
+  }
+
+  function wireStepNav() {
+    var btn = document.getElementById("btn-back-inline");
+    if (btn) btn.addEventListener("click", back);
   }
 
   function renderEnd(node) {
@@ -130,6 +147,7 @@
   }
 
   function renderTrail() {
+    trailHint.classList.toggle("hidden", state.path.length === 0);
     trailEl.innerHTML = "";
     state.path.forEach(function (p, i) {
       var li = document.createElement("li");
