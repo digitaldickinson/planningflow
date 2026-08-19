@@ -156,7 +156,7 @@ var NODES = {
     image: {
       src: "images/planning-notice-example.jpg",
       alt: "A white planning site notice cable-tied to a lamppost, giving the application number, the proposal, the consultation period and the case officer's details.",
-      caption: "White or yellow, no mandated colour — a planning site notice. Confirm from the wording, not the paper."
+      caption: "The notice will look something like this. There's no mandated colour, but it will usually be white."
     },
     capture: [
       { key: "ref", label: "Application reference number" },
