@@ -20,7 +20,7 @@ var NODES = {
       { label: "Yes — someone says the rules are being broken", note: "Unauthorised works, a build that doesn't match the drawings, ignored conditions, trading outside permitted hours.", to: "breach_which" },
       { label: "No — this is a proposal, application or decision", note: "Something going through the system rather than round it and it coulc be interesting.", to: "notice" }
     ],
-    bookRef: "Possible Morrison?"
+    bookRef: "If you have a copy of Morrison's Essential Public Affairs for journalits, the chapters on Planning policy and Environmental protection and Transport, environment, leisure and culture are the most relevant."
   },
 
   notice: {
@@ -31,8 +31,7 @@ var NODES = {
     options: [
       { label: "Yes — I'm standing in front of one", note: "Photograph it, including the small print and the dates.", to: "colour" },
       { label: "No — I'm searching speculatively", note: "Nothing physical yet. Start from the portals.", to: "which" }
-    ],
-    bookRef: "Possible Morrison?"
+    ]
   },
 
   colour: {
@@ -55,7 +54,7 @@ var NODES = {
         judgement: "You read the notice and decided what it actually was. Colour narrowed it; the wording settled it.You checked the dates to make sure it was in scope"
       }
     ],
-    bookRef: "Possible Morrison?"
+    bookRef: "Morrison has more on the Licensing Act 2003 in Section 17.3.5 'The licensing of pubs and clubs, and drinking by-laws?' (9th Edition)"
   },
 
   /* ---------- licensing, from a notice ---------- */
@@ -63,7 +62,7 @@ var NODES = {
     type: "step",
     eyebrow: "Licensing notice",
     q: "Take the details off the notice before you walk away",
-    body: "The notice will name the premises and the applicant, and give a date by which representations must be made. Note the borough too — licensing is administered borough by borough, and there is no national search.",
+    body: "The licensing process can cover a whole range of uses and business activities. The notice will help narrow that down and also name the applicant. It will also give a date by which representations must be made. Note the council too. Licensing is administered borough by borough and you may have drifted 'off patch'.",
     image: {
       src: "images/licensing-notice-example.jpg",
       alt: "A pale blue Licensing Act 2003 public notice taped inside a pub window, giving the applicant, the premises, the activities applied for and the deadline for representations.",
@@ -71,11 +70,11 @@ var NODES = {
     },
     capture: [
       { key: "premises", label: "Premises name and address" },
-      { key: "borough", label: "Borough" },
+      { key: "borough", label: "Council" },
       { key: "repdate", label: "Deadline for representations (from the notice)" }
     ],
     to: "lic_type",
-    bookRef: "Possible Morrison?"
+    bookRef: "Take a look the following for more guidance on licensing: https://www.local.gov.uk/publications/licensing-act-2003-councillors-handbook-england-and-wales-0"
   },
 
   lic_type: {
@@ -87,18 +86,16 @@ var NODES = {
       { label: "Review", note: "Somebody with standing has asked for the licence to be reconsidered.", to: "lic_story" },
       { label: "Variation", note: "An existing licence being changed — hours, capacity, layout, conditions.", to: "lic_variation" },
       { label: "New application", note: "A new premises licence being sought.", to: "lic_calendar" }
-    ],
-    bookRef: "Possible Morrison?"
+    ]
   },
 
   lic_calendar: {
     type: "step",
     eyebrow: "Licensing — no shortcut",
-    body: "Open that borough's own committee calendar — democracy.&lt;council&gt;.gov.uk and find the licensing sub-committee or hearing panel. No aggregator exists for licensing, so this is a borough-by-borough crawl. Agenda papers normally appear on the meeting page ahead of the hearing rather than on the day.",
+    body: "Open that councils own committee calendar and find the licensing sub-committee or hearing panel. No aggregator exists for licensing, so this can be a council-by-councilcrawl. Agenda papers normally appear on the meeting page ahead of the hearing rather than on the day.",
     q: "Find the hearing on the borough's committee calendar",
     capture: [{ key: "hearing", label: "Hearing date, if listed" }],
-    to: "lic_objections",
-    bookRef: "Possible Morrison?"
+    to: "lic_objections"
   },
 
   lic_objections: {
@@ -109,14 +106,13 @@ var NODES = {
     options: [
       { label: "Yes — representations have been lodged", note: "The papers will usually name who objected and on what grounds.", to: "lic_story" },
       { label: "No, or the papers aren't up yet", note: "Nothing to hang a story on today.", to: "lic_diarise", judgement: "You decided 'no objections yet' rather than 'no story ever'. Those are different, and only the diary tells them apart." }
-    ],
-    bookRef: "Possible Morrison?"
+    ]
   },
 
   lic_variation: {
     type: "end",
     kind: "routine",
-    title: "Medium potential — worth one phone call, not a splash",
+    title: "Medium potential — worth a bit more digging",
     lead: "A variation is only interesting if you know what is changing and why. Longer hours, bigger capacity and outdoor areas are the ones that generate residential opposition.",
     actions: [
       "Get the current licence and the proposed one and compare the conditions line by line.",
