@@ -15,23 +15,120 @@ var NODES = {
     type: "q",
     eyebrow: "Question 1 — why are we looking?",
     q: "Have you seen something or told that something is wrong?",
-    why: "This is the first step because if someone has told you something is wrong that could be a breach in planning or licensing law. There are different 'types' of breach in law, and they are not the same story: doing it without permission, and doing it differently from the permission you hold.",
+    why: "This is an important first step. If someone has told you something is wrong, that could be a breach of planning or licensing law. There are different 'types' of breach in law, and they are not the same story: doing it without permission and doing it differently from the permission you hold. However, it could also be that the activity is actually legal under the planning laws - they are complicated!  But it could also be that you've found out about an existing plan and want to work it through.  So is someone alleging a breach?",
     options: [
       { label: "Yes — someone says the rules are being broken", note: "Unauthorised works, a build that doesn't match the drawings, ignored conditions, trading outside permitted hours.", to: "breach_which" },
       { label: "No — this is a proposal, application or decision", note: "Something going through the system rather than round it and it could be interesting.", to: "notice" }
     ],
-    bookRef: "If you have a copy of Morrison's Essential Public Affairs for journalists, the chapters on Planning policy and Environmental protection and Transport, environment, leisure and culture are the most relevant."
+    bookRef: "If you have a copy of Morrison's Essential Public Affairs for journalists, the chapters on \"Planning policy and Environmental protection\" and \"Transport, environment, leisure and culture\" are the most relevant. In this resource, any references to chapters etc. are taken from the 9th Edition"
   },
 
   notice: {
     type: "q",
     eyebrow: "Question 2 — where the lead came from",
     q: "Have you actually seen a physical notice — lamppost, hoarding, shop window?",
-    why: "A notice in the street is a common starting point for a story! It gives you a document to read and valuable information to move forward. Without one you are searching speculatively, which is a different route.",
+    why: "A notice in the street is a common starting point for a story! It gives you a document to read and valuable information to move forward. Without one you are searching speculatively, which is a different route. But sometimes the decision has already happened in public, at a committee, before you ever saw a notice, that's a different route again. But it could simply be you've seen something like builders working, new hoardings around an area, or more building work, and become curious about what's going on.",
     options: [
       { label: "Yes — I'm standing in front of one", note: "Photograph it, including the small print and the dates.", to: "colour" },
+      { label: "I attended, or have seen coverage of, a committee or hearing where this was already decided", note: "A council meeting, a licensing panel, a report from the Local Democracy Reporting Service.", to: "meeting_which" },
       { label: "No — I'm searching speculatively", note: "Nothing physical yet. I've heard a rumour or think there should be one!", to: "which" }
     ]
+  },
+
+  /* ---------- attended a meeting, or read coverage of one ---------- */
+  meeting_which: {
+    type: "q",
+    eyebrow: "Already decided in public",
+    q: "Planning or licensing?",
+    why: "What area does this relate to? Each has its own processes, different documents, and different contacts. Both are enforced by the council, but beyond that, they don't have much in common.",
+    options: [
+      { label: "Planning", note: "Building works, extensions, change of use, signage, large developments, site operations.", to: "meeting_plan" },
+      { label: "Licensing", note: "A panel or sub-committee has granted, refused, or deferred a licence.", to: "meeting_lic" }
+    ],
+    bookRef: "This is often the single most common way a local reporter actually gets a story — sitting in the room, or picking up an LDRS report of one, rather than spotting a notice first."
+  },
+
+  meeting_lic: {
+    type: "step",
+    eyebrow: "Licensing meeting",
+    q: "Capture what actually happened at the hearing",
+    body: "Write down the premises, what was decided, and who gave evidence or objected — police, environmental health, residents. Note your source: your own attendance, or a written copy from the LDRS or local paper. If you weren't there, get the minutes or the officer's report of the meeting from the council, since a secondhand account of what was said is not the same as the record.",
+    capture: [
+      { key: "premises", label: "Premises name and address" },
+      { key: "borough", label: "Council" },
+      { key: "source", label: "Your source — attended, LDRS, minutes, other" }
+    ],
+    to: "meeting_lic_outcome",
+    bookRef: ""
+  },
+
+  meeting_lic_outcome: {
+    type: "q",
+    eyebrow: "Licensing meeting",
+    q: "What did the committee decide?",
+    why: "A licence refused, or granted only with conditions well beyond what the applicant proposed, means objections or police/environmental health evidence carried real weight — that's the same story shape as a review. A quiet grant with nothing added is a different kind of outcome entirely.",
+    options: [
+      { label: "Refused, or granted only with heavy new conditions, after evidence or objections", note: "Check what the objectors or responsible authorities actually said, and what the applicant said back.", to: "money_lic", judgement: "You decided the evidence or objections were what drove the outcome, rather than the application being weak on its own terms — that's worth being able to defend." },
+      { label: "Granted, with little or no opposition", note: "The application went through much as proposed.", to: "meeting_lic_routine" },
+      { label: "Deferred or adjourned to a future date", note: "No decision yet — more information requested, or a further hearing needed.", to: "lic_diarise" }
+    ],
+    bookRef: ""
+  },
+
+  meeting_lic_routine: {
+    type: "end",
+    kind: "routine",
+    title: "Granted with little fuss — a meeting happened, but there's not much of a story yet",
+    lead: "Most licensing decisions are uncontested. Being in the room, or reading the LDRS copy, doesn't guarantee news value — but it does guarantee facts you'd otherwise have to chase.",
+    actions: [
+      "Get the licence and the conditions actually granted, not just the application as submitted — variations and future disputes often start from exactly this document.",
+      "Note whether any conditions were added beyond what the applicant proposed. Even a small addition is sometimes the only public evidence that a concern was raised at all.",
+      "Note who spoke, even briefly, for or against — objectors and officers are sources for a future story even when there isn't one today.",
+      "File it. The same operator returning to committee repeatedly is a pattern, and patterns are where the review applications eventually come from."
+    ],
+    bookRef: ""
+  },
+
+  meeting_plan: {
+    type: "step",
+    eyebrow: "Planning meeting",
+    q: "Capture what actually happened at the meeting",
+    body: "Write down what was decided — approved, refused, or deferred — and critically, whether the committee followed or departed from the planning officer's recommendation. Note who spoke: objectors, the applicant or their agent, the ward councillor. Note your source: your own attendance, or a written copy from the LDRS or local paper. If you weren't there, get the minutes or webcast rather than relying on a secondhand account of what was said.",
+    capture: [
+      { key: "site", label: "Site address" },
+      { key: "ref", label: "Application reference, if known" },
+      { key: "source", label: "Your source — attended, LDRS, minutes, other" }
+    ],
+    to: "meeting_plan_outcome",
+    bookRef: ""
+  },
+
+  meeting_plan_outcome: {
+    type: "q",
+    eyebrow: "Planning meeting",
+    q: "What did the committee decide, and how did it get there?",
+    why: "A refusal, or an approval that goes against the officer's recommendation, is the same signal plan_story already looks for — the committee substituting its own judgement for the professional advice in front of it. An approval that simply follows the recommendation, with nobody objecting, is a different outcome.",
+    options: [
+      { label: "Refused, or approved against the officer's recommendation", note: "That gap between recommendation and decision is usually the story.", to: "money_plan", judgement: "You decided the committee's departure from the recommendation was the significant fact — check the minutes support that reading before you write it that way." },
+      { label: "Approved in line with the recommendation, little or no objection", note: "Went through much as the officer suggested.", to: "meeting_plan_routine" },
+      { label: "Deferred, or decision delayed for more information", note: "No decision yet.", to: "plan_filler" }
+    ],
+    bookRef: ""
+  },
+
+  meeting_plan_routine: {
+    type: "end",
+    kind: "routine",
+    title: "Approved as recommended — a meeting happened, but nothing to write yet",
+    lead: "Most committee decisions follow the officer's recommendation with little debate. Attending, or reading the coverage, doesn't turn that into a story on its own.",
+    actions: [
+      "Note the decision and the case officer's name, in case conditions or the drawings matter later.",
+      "Check whether any conditions were varied from the recommendation, even where the outcome itself wasn't in doubt.",
+      "Note who, if anyone, spoke against it — a lone objector at an uncontested meeting is sometimes worth a call regardless of the outcome.",
+      "If this is one of several similar applications going through the same committee, the pattern is the story, not the individual decision.",
+      "If this is an HMO approval, the same caution applies as elsewhere in this tool — even a routine write-up shouldn't let the word imply asylum accommodation or landlord neglect that nothing here supports."
+    ],
+    bookRef: ""
   },
 
   colour: {
@@ -127,7 +224,7 @@ var NODES = {
     type: "step",
     eyebrow: "Before you write it — who is this?",
     q: "Check who's actually behind the premises",
-    body: "The name on the licence is a person, but the money behind a premises is often a company, and that's the part worth ten minutes on Companies House before you ring anyone. Run the licensee and any named directors: are they still active on this company, do they have other dissolved companies (phoenixing — the same operator closing one company and opening an identical one to shed debts or a bad record is a pattern worth knowing before the interview, not after), and does the registered address match the premises or somewhere else entirely. Not every premises has a company behind it — plenty are sole traders, in which case there's nothing to search and that's fine.",
+    body: "The name on the licence is a person, but the money behind a premises is often a company, and that's the part worth ten minutes on Companies House before you ring anyone. Run the licensee and any named directors: are they still active on this company, do they have other dissolved companies (phoenixing — the same operator closing one company and opening an identical one to shed debts or a bad record is a pattern worth knowing), and does the registered address match the premises or somewhere else entirely. Not every premises has a company behind it, plenty are sole traders, in which case there's nothing to search for. But it's useful due diligence.",
     capture: [{ key: "directors", label: "Directors / company name found, if any" }],
     to: "lic_story",
     bookRef: "Companies House's free search (find-and-update.company-information.service.gov.uk) covers UK-registered companies only. For guidance on reading a filing history and spotting dissolved-and-reopened patterns, see the Companies House 'Life of a company' guidance series on Gov.uk."
@@ -196,7 +293,7 @@ var NODES = {
     type: "q",
     eyebrow: "Planning — the judgement call",
     q: "Is it contentious?",
-    why: "Look for red flags: height, greenbelt, heritage, scale, loss of trees/parking, or visible local objection. No portal will answer this for you. It is a reporting judgement about a place you are supposed to know.",
+    why: "Look for red flags: height, greenbelt, heritage, scale, loss of trees/parking, or visible local objection. But contentious doesn't always mean loud — an officer's report that makes a specific, sharply-evidenced finding (measured floorspace, a named policy breach, a photographed sightline) can carry a story with no objector in sight and no committee hearing at all. No portal will answer this for you. It is a reporting judgement about a place you are supposed to know.",
     options: [
       { label: "Yes — one of those applies", note: "Or the comments section is already filling up.", to: "money_plan", judgement: "You judged this contentious. No field in any database says 'contentious' — you decided it, and you should be able to say why." },
       { label: "No — it's routine", note: "Householder extensions, signage, changes of use nobody minds.", to: "appeal_q", judgement: "You judged this routine. Worth being honest that 'routine' sometimes means 'nobody has noticed yet'." }
@@ -226,10 +323,11 @@ var NODES = {
       "The developer or their agent, for the design and access statement and a comment.",
       "Cross-check designations on <a href=\"https://www.planning.data.gov.uk\" target=\"_blank\" rel=\"noopener\">planning.data.gov.uk</a> — listed building, conservation area, greenbelt, flood risk.",
       "Check whether a similar scheme on this site, or by the same applicant, was previously refused and taken to appeal — that's usable precedent either way.",
+      "If this is a change of use to an HMO, don't let the word do the reporting for you. 'HMO' currently gets read through two loaded and largely unrelated lenses — asylum dispersal accommodation, and 'rogue landlord' housing quality — and a story can trigger either association in readers regardless of the facts. Report what the application documents and officer's report actually say about the intended occupants and operator, not what the word tends to imply.",
       "The committee date, and whether the meeting is webcast."
     ],
     tail: "Two dates matter: the comment deadline, and the committee meeting. Miss the first and your readers cannot act on the story.",
-    bookRef: ""
+    bookRef: "On the HMO framing point: IPSO's Editors' Code, Clause 1 (Accuracy) and Clause 12 (Discrimination), both bear directly on reporting an HMO story in a way that implies an unstated connection to asylum accommodation or exploitative letting."
   },
 
   plan_filler: {
@@ -240,7 +338,8 @@ var NODES = {
     actions: [
       "Note the case officer's name and the comment deadline.",
       "Make a note in your diary to check just before the deadline to see whether objections landed.",
-      "If it is one of several similar applications in the same ward, the pattern is the story, not the application."
+      "If it is one of several similar applications in the same ward, the pattern is the story, not the application.",
+      "If this is a change of use to an HMO, the same caution applies even at filler level — don't let a passing mention imply asylum accommodation or landlord neglect that nothing in the application actually supports."
     ],
     bookRef: ""
   },
@@ -370,30 +469,30 @@ var NODES = {
     type: "step",
     eyebrow: "Planning breach — do this before anything else",
     q: "Find out what, if anything, was actually permitted",
-    body: "Section 171A of the Town and Country Planning Act 1990 defines a breach two ways: development carried out <em>without</em> the required permission, or failing to comply with a condition or limitation attached to a permission that was granted. Those are different stories. A two-storey extension where one storey was approved is not the same allegation as a build with no permission at all — the first has a decision notice and approved drawings you can put alongside a photograph, the second has nothing on file to compare against. So search the address on the borough's planning portal, or <a href=\"https://www.planningalerts.app\" target=\"_blank\" rel=\"noopener\">PlanningAlerts.app</a>, and pull the decision notice, the approved drawings and the full condition list before you ring anyone.",
+    body: "Section 171A of the Town and Country Planning Act 1990 defines a breach two ways: development carried out <em>without</em> the required permission, or failing to comply with a condition or limitation attached to a permission that was granted. Those are different stories. A two-storey extension where one storey was approved is not the same allegation as a build with no permission at all. The first has a decision notice and approved drawings you can put alongside a photograph, the second has nothing on file to compare against. Search the address on the borough's planning portal, or <a href=\"https://www.planningalerts.app\" target=\"_blank\" rel=\"noopener\">PlanningAlerts.app</a>, and pull the decision notice, the approved drawings and the full condition list before you ring anyone.",
     capture: [
       { key: "site", label: "Site address" },
       { key: "ref", label: "Reference of any permission you find" },
       { key: "permitted", label: "What the permission actually allowed" }
     ],
     to: "breach_compare",
-    bookRef: "See Morrison’s section on Planning Control and Enforcement in Chapter 14. It explains the legal weight of planning conditions, which is exactly the baseline you are trying to establish before reporting a breach."
+    bookRef: " "
   },
 
   breach_compare: {
     type: "q",
     eyebrow: "Planning breach",
-    q: "Put the approved drawings next to what's on the ground. What do you have?",
+    q: "Compare the approved drawings and conditions with what's happening on the ground. What do you have?",
     why: "This comparison is the entire reporting task on this branch. Everything downstream depends on which of these three you are actually looking at.",
     options: [
       {
-        label: "A permission exists, and what's being built departs from it",
-        note: "Extra storey, bigger footprint, different use, different materials.",
+        label: "A permission exists, and what's being built departs from it or conditions aren't being met",
+        note: "Extra storey, bigger footprint, different use, different materials, promised improvements or planning gains not delivered.",
         to: "money_breach",
         judgement: "You compared a drawing to a building and decided they differ. That is a judgement — and the developer's answer will be that you misread the drawing, so be sure."
       },
       {
-        label: "A permission exists, and the building matches it",
+        label: "A permission exists, the building matches it and conditions have been met",
         note: "The structure is as approved — but that is not the end of it.",
         to: "breach_conditions_end"
       },
@@ -404,7 +503,7 @@ var NODES = {
         judgement: "You searched and found nothing. Absence of a record is not evidence of wrongdoing, and treating it as such is the most common way this story goes wrong."
       }
     ],
-    bookRef: "Textbooks won't teach you how to read architectural plans, but Chapter 14 of Morrison reinforces why these approved documents are legally binding. If you need a refresher on site plans, the <a href='https://www.planningportal.co.uk/' target='_blank' rel='noopener'>Planning Portal</a> has good plain-English guides."
+    bookRef: ""
   },
 
   money_breach: {
@@ -428,10 +527,11 @@ var NODES = {
       "Check whether a variation was later approved — a section 73 application, or a non-material amendment. Developers often have consent for the change and nobody noticed it go through.",
       "Ring the council's planning enforcement team and ask whether a case is open on the address.",
       "Ask when the works were substantially completed. Enforcement is time-limited: within 10 years where substantial completion took place on or after 25 April 2024, but only 4 years where it took place before that date. 'The council can no longer act' is itself the story.",
-      "Put it to the owner or developer, with the drawing number, and give them a real opportunity to respond."
+      "Put it to the owner or developer, with the drawing number, and give them a real opportunity to respond.",
+      "If the departure is an HMO conversion beyond what was approved, the same caution applies as elsewhere in this tool — don't let the word 'HMO' imply asylum accommodation or landlord neglect the facts don't support."
     ],
     tail: "The likeliest innocent explanation is an amendment you haven't found. Rule it out before you publish, not after.",
-    bookRef: "Morrison Chapter 14 covers enforcement notices, but a warning: older editions will not reflect the April 2024 changes to the 4-year/10-year immunity rules (brought in by the Levelling-up and Regeneration Act). For the exact legal timelines, always refer to current Gov.uk Planning Practice Guidance."
+    bookRef: ""
   },
 
   breach_conditions_end: {
@@ -443,10 +543,11 @@ var NODES = {
       "Read the full condition list on the decision notice. The ones that get broken are hours of operation, delivery times, landscaping, materials, parking provision, occupancy restrictions and noise limits.",
       "Look for conditions requiring something to be submitted and approved before use begins — a drainage scheme, a management plan. These are quietly ignored more often than anything else.",
       "If a condition is being breached, that is enforceable by a breach of condition notice, which is a different instrument from an enforcement notice. Ask the council which, if either, they have served.",
-      "If nothing is being breached, say so and move on. Not every complaint is a story."
+      "If nothing is being breached, say so and move on. Not every complaint is a story.",
+      "If the condition in question relates to an HMO — occupancy numbers, management conditions — the same caution applies as elsewhere in this tool: report what the condition and the evidence actually say, not what the word 'HMO' tends to imply."
     ],
     tail: "Condition breaches are the least glamorous and most reliably true planning stories on any patch.",
-    bookRef: "Morrison Chapter 14 outlines the specific enforcement tools local authorities have, including 'stop notices' and 'breach of condition notices'. Understanding the difference between these instruments is vital to accurately reporting what the council is actually doing."
+    bookRef: ""
   },
 
   breach_none: {
@@ -463,14 +564,14 @@ var NODES = {
       "Establish when the works were finished. Immunity runs to 10 years where substantial completion was on or after 25 April 2024, and 4 years where it was before."
     ],
     tail: "This branch is the reason the flowchart exists. Every tool on the other branches is a way of reading documents somebody chose to publish. This one is reporting.",
-    bookRef: "Planning rules do allow for changes without permission. Your source may not know this. See Chapter 15 of Morrison."
+    bookRef: ""
   },
 
   lic_conditions: {
     type: "step",
     eyebrow: "Licensing breach — do this before anything else",
     q: "Get the licence and read its conditions",
-    body: "You do not have to ask a press officer for this. Each licensing authority must keep a register of the premises licences it has issued, must make it available for inspection by any person during office hours without payment, and must supply a copy of an entry on request — it may charge a reasonable fee for the copy. So the conditions, the permitted hours and the designated premises supervisor are all obtainable as of right. Get them before you accept anyone's account of what the premises is and is not allowed to do.",
+    body: "Each licensing authority must keep a register of the premises licences it has issued, must make it available for inspection by any person during office hours without payment, and must supply a copy of an entry on request — it may charge a reasonable fee for the copy. So the conditions, the permitted hours and the designated premises supervisor are all obtainable as of right. Get them before you accept anyone's account of what the premises is and is not allowed to do.",
     capture: [
       { key: "premises", label: "Premises name and address" },
       { key: "borough", label: "Borough" },
@@ -484,7 +585,7 @@ var NODES = {
     type: "q",
     eyebrow: "Licensing breach — before you judge it",
     q: "Could a Temporary Event Notice cover what you're seeing?",
-    why: "A TEN lets a premises trade outside its normal licence conditions for a short period — longer hours, live music, a marquee in the car park — without varying the licence itself. It's the single most common innocent explanation for what looks like a breach, and it's the reason to check now rather than after you've already decided this is a story.",
+    why: "A TEN or Temporary Event Notice lets a premises trade outside its normal licence conditions for a short period - longer hours, live music, a marquee in the car park - without varying the licence itself. It's the single most common innocent explanation for what looks like a breach, and it's the reason to check now rather than after you've already decided this is a story.",
     options: [
       { label: "There's a TEN on record covering this date", note: "Check the register — TENs sit alongside premises licences and are open to inspection the same way.", to: "lic_notbreach", judgement: "A TEN existing doesn't automatically mean the activity fell within it — check what the notice actually covers before you close this off." },
       { label: "No TEN on record, or it doesn't cover this", note: "Nothing filed for this date, or the TEN doesn't stretch to what's actually happening.", to: "lic_breach_check" }
@@ -501,7 +602,7 @@ var NODES = {
       { label: "Yes — it's outside what the licence permits", note: "Trading later, louder, or bigger than the conditions allow.", to: "money_licbreach", judgement: "You read the conditions and decided the premises is outside them. Licence conditions are drafted loosely and licensees read them generously — expect a fight over interpretation." },
       { label: "No, or the licence covers it", note: "The activity is permitted, whatever the neighbours think of it.", to: "lic_notbreach" }
     ],
-    bookRef: "Remember the four statutory licensing objectives (prevention of crime, public safety, public nuisance, protection of children). As Morrison notes, any breach you identify usually needs to map directly back to one of these four objectives for the council to take action."
+    bookRef: "Remember the four statutory licensing objectives (prevention of crime, public safety, public nuisance, protection of children).  "
   },
 
   money_licbreach: {
@@ -526,22 +627,22 @@ var NODES = {
       "Ask whether a review application has been made, or whether residents are preparing one. That is the moment the story acquires a date, an agenda and named parties.",
       "Put it to the licensee. They have a right of reply and often a document you haven't seen."
     ],
-    tail: "The enforcement history is the harder half and usually needs an FOI. The licence itself is free and immediate.",
-    bookRef: "See Morrison's sections on licensing for the powers held by 'responsible authorities' (like the police, environmental health, and trading standards). They are the heavy hitters who can initiate a formal review."
+    tail: "The enforcement history is the harder half and you may need to use tool like FOI. The licence itself should be free and immediate.",
+    bookRef: ""
   },
 
   lic_notbreach: {
     type: "end",
     kind: "routine",
     title: "Not a licensing breach — so what is it?",
-    lead: "If the licence permits it, the complaint is about something else. That doesn't mean there is no story; it means you were looking in the wrong regime.",
+    lead: "If the licence permits it, the complaint is likely about something else; noise, rubbish etc. That doesn't mean there is no story; it means there are other places to look.",
     actions: [
       "Statutory nuisance sits with environmental health, not licensing, and has its own complaint and abatement process.",
-      "A change in how the premises is used — restaurant to bar, say — may be a planning matter rather than a licensing one.",
-      "If residents are unhappy with a lawfully operating premises, the story may be the licensing policy itself: cumulative impact, saturation, late-night levy.",
-      "Diarise it. Repeated complaints about a compliant premises is a pattern, and patterns are where the review applications come from."
+      "A change in how the premises is used, changing from a cafe to a bar, may be a planning matter rather than a licensing one.",
+      "If residents are unhappy with a lawfully operating premises, they can raise it with the council but it's worth noting that the story may be an indicator of patterns in licensing policy itself: cumulative impact, saturation, late-night levy.",
+      "Research it and note it. Repeated complaints about a compliant premises is a pattern, and patterns are where the review applications come from. Have the venue or the owners cropped up before?"
     ],
-    bookRef: "If the issue is noise, smells, or rubbish rather than a strict licensing breach, Morrison's chapter on Environmental Protection explains the 'statutory nuisance' process governed by the Environmental Protection Act 1990."
+    bookRef: "If the issue is noise, smells, or rubbish rather than a strict licensing breach, it may fall under a  'statutory nuisance' process governed by the Environmental Protection Act 1990."
   }
 };
 

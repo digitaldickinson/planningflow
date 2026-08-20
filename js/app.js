@@ -3,6 +3,11 @@
 
   var state = { path: [], current: START, data: {}, notes: "" };
 
+  var initialHash = decodeURIComponent(location.hash.replace(/^#/, ""));
+  if (initialHash && NODES.hasOwnProperty(initialHash)) {
+    state.current = initialHash;
+  }
+
   var stage = document.getElementById("stage");
   var trailEl = document.getElementById("trail");
   var trailHint = document.getElementById("trail-hint");
@@ -24,7 +29,7 @@
   }
 
   function bookRefHtml(text) {
-    return '<p class="book-ref"><span class="book-ref-label">Ref</span>' + text + "</p>";
+    return '<p class="book-ref"><span class="book-ref-label">Note</span>' + text + "</p>";
   }
 
   /* =========================================================
@@ -155,6 +160,9 @@
 
   function renderTrail() {
     trailHint.classList.toggle("hidden", state.path.length === 0);
+    if (state.path.length) {
+      trailHint.textContent = "Your path so far — step " + state.path.length + " — tap any step to jump back to it";
+    }
     trailEl.innerHTML = "";
     state.path.forEach(function (p, i) {
       var li = document.createElement("li");
@@ -205,6 +213,7 @@
     state.current = opt.to;
     render();
     stage.focus();
+    pushHistory();
   }
 
   function truncate(q) {
@@ -215,20 +224,19 @@
     return truncate(node.q || node.eyebrow || "");
   }
 
+  /* back() and rewind() move through browser history rather than mutating
+     state directly, so the OS/gesture back button undoes a step instead of
+     leaving the page — the popstate listener below is what actually
+     restores state and re-renders. */
   function back() {
     if (!state.path.length) return;
-    var last = state.path.pop();
-    state.current = last.from;
-    render();
-    stage.focus();
+    history.back();
   }
 
   function rewind(i) {
-    var target = state.path[i];
-    state.path = state.path.slice(0, i);
-    state.current = target.from;
-    render();
-    stage.focus();
+    var delta = state.path.length - i;
+    if (delta <= 0) return;
+    history.go(-delta);
   }
 
   function restart() {
@@ -236,7 +244,28 @@
     state.current = START;
     render();
     stage.focus();
+    pushHistory();
   }
+
+  /* =========================================================
+     BROWSER HISTORY — makes the OS/gesture back button undo a step,
+     and makes the current node's URL shareable/bookmarkable.
+     ========================================================= */
+
+  function pushHistory() {
+    /* .slice() the path — it's a live array that keeps growing via
+       push(); storing the reference itself would let a later push()
+       retroactively change what this history entry remembers. */
+    history.pushState({ path: state.path.slice(), current: state.current }, "", "#" + encodeURIComponent(state.current));
+  }
+
+  window.addEventListener("popstate", function (e) {
+    var s = e.state;
+    state.path = (s && s.path) ? s.path.slice() : [];
+    state.current = (s && s.current) || START;
+    render();
+    stage.focus();
+  });
 
   /* =========================================================
      NOTEBOOK EXPORT
@@ -345,5 +374,6 @@
     }
   });
 
+  history.replaceState({ path: state.path.slice(), current: state.current }, "", "#" + encodeURIComponent(state.current));
   render();
 })();
