@@ -13,20 +13,20 @@ var NODES = {
 
   start: {
     type: "q",
-    eyebrow: "Question 1 — before any tool",
-    q: "Suspected breach — something built without permission, or conditions being ignored?",
-    why: "This fork comes first because it decides whether any of the digital tools are relevant. But note there are two kinds of breach in law, and they are not the same story: doing it without permission, and doing it differently from the permission you hold.",
+    eyebrow: "Question 1 — why are we looking?",
+    q: "Have you seen something or told that something is wrong?",
+    why: "This is the first step becuase if someone has told you something is wrong that could be a breach in planning or licensing law.There are different 'types' of breach in law, and they are not the same story: doing it without permission, and doing it differently from the permission you hold.",
     options: [
       { label: "Yes — someone says the rules are being broken", note: "Unauthorised works, a build that doesn't match the drawings, ignored conditions, trading outside permitted hours.", to: "breach_which" },
-      { label: "No — this is a proposal, application or decision", note: "Something going through the system rather than round it.", to: "notice" }
+      { label: "No — this is a proposal, application or decision", note: "Something going through the system rather than round it and it coulc be interesting.", to: "notice" }
     ]
   },
 
   notice: {
     type: "q",
     eyebrow: "Question 2 — where the lead came from",
-    q: "Have you actually seen a physical statutory notice — lamppost, hoarding, shop window?",
-    why: "A notice in the street gives you a document to read. Without one you are searching speculatively, which is a different route.",
+    q: "Have you actually seen a physical notice — lamppost, hoarding, shop window?",
+    why: "A notice in the street gives you a document to read and valuable information to move forward.  Without one you are searching speculatively, which is a different route.",
     options: [
       { label: "Yes — I'm standing in front of one", note: "Photograph it, including the small print and the dates.", to: "colour" },
       { label: "No — I'm searching speculatively", note: "Nothing physical yet. Start from the portals.", to: "which" }
@@ -37,11 +37,11 @@ var NODES = {
     type: "q",
     eyebrow: "Question 3 — reading the notice",
     q: "What colour is it?",
-    why: "Colour is the fastest reliable tell, but only in one direction. Pale blue means licensing as a matter of law. Everything else means probably planning — check the wording rather than trusting the paper.",
+    why: "Colour is the fastest reliable way to see what the notice is about. Pale blue means licensing - that colour is required as a matter of law. Everything else probably means its related to planning planning. But you shouldcheck the wording rather than trusting the paper.",
     options: [
       {
-        label: "Pale blue, A4 or larger",
-        note: "Legally mandated colour and size under the Licensing Act 2003, displayed for 28 consecutive days.",
+        label: "Pale blue",
+        note: "Legally mandated colour (and size) under the Licensing Act 2003, displayed for 28 consecutive days. Check that date",
         thumb: "images/licensing-notice-example.jpg",
         to: "lic_notice"
       },
@@ -50,7 +50,7 @@ var NODES = {
         note: "Common practice, not a legal colour requirement — so confirm from the wording, not the colour.",
         thumb: "images/planning-notice-example.jpg",
         to: "plan_notice",
-        judgement: "You read the notice and decided what it actually was. Colour narrowed it; the wording settled it."
+        judgement: "You read the notice and decided what it actually was. Colour narrowed it; the wording settled it.You checked the dates to make sure it was in scope"
       }
     ]
   },
@@ -64,7 +64,7 @@ var NODES = {
     image: {
       src: "images/licensing-notice-example.jpg",
       alt: "A pale blue Licensing Act 2003 public notice taped inside a pub window, giving the applicant, the premises, the activities applied for and the deadline for representations.",
-      caption: "Pale blue, Licensing Act 2003 — the colour and size are a legal requirement, not house style."
+      caption: "Pale blue, Licensing Act 2003 — the colour and size are a legal requirement, not whatever was on the printer!"
     },
     capture: [
       { key: "premises", label: "Premises name and address" },
@@ -78,7 +78,7 @@ var NODES = {
     type: "q",
     eyebrow: "Licensing",
     q: "Is it marked as an application, a variation, or a review?",
-    why: "This word is the whole story judgement. A review means somebody has already complained formally.",
+    why: "This word is important to judging the value of the story. For example, a review means somebody has already complained formally.",
     options: [
       { label: "Review", note: "Somebody with standing has asked for the licence to be reconsidered.", to: "lic_story" },
       { label: "Variation", note: "An existing licence being changed — hours, capacity, layout, conditions.", to: "lic_variation" },
@@ -89,7 +89,7 @@ var NODES = {
   lic_calendar: {
     type: "step",
     eyebrow: "Licensing — no shortcut",
-    body: "Open that borough's own committee calendar — democracy.&lt;council&gt;.gov.uk, usually Modern.gov — and find the licensing sub-committee or hearing panel. No aggregator exists for licensing, so this is a borough-by-borough crawl. Agenda papers normally appear on the meeting page ahead of the hearing rather than on the day.",
+    body: "Open that borough's own committee calendar — democracy.&lt;council&gt;.gov.uk and find the licensing sub-committee or hearing panel. No aggregator exists for licensing, so this is a borough-by-borough crawl. Agenda papers normally appear on the meeting page ahead of the hearing rather than on the day.",
     q: "Find the hearing on the borough's committee calendar",
     capture: [{ key: "hearing", label: "Hearing date, if listed" }],
     to: "lic_objections"
@@ -99,7 +99,7 @@ var NODES = {
     type: "q",
     eyebrow: "Licensing",
     q: "Are there objections on the agenda — police, environmental health, or resident representations?",
-    why: "An uncontested application is paperwork. A contested one has named opponents, a hearing, and two sides who will talk to you.",
+    why: "An uncontested application is paperwork. A contested one has named parties (people you can speak to), a hearing (activity you can report on), and different perspectives to consider. ",
     options: [
       { label: "Yes — representations have been lodged", note: "The papers will usually name who objected and on what grounds.", to: "lic_story" },
       { label: "No, or the papers aren't up yet", note: "Nothing to hang a story on today.", to: "lic_diarise", judgement: "You decided 'no objections yet' rather than 'no story ever'. Those are different, and only the diary tells them apart." }
@@ -116,14 +116,14 @@ var NODES = {
       "Ask the licensing team whether this premises has a history — previous representations, warnings, review applications.",
       "Ring the nearest residents' association or the ward councillor and ask if anyone has noticed."
     ],
-    tail: "If it has history, it stops being a variation story and becomes a pattern story."
+    tail: "If it has history, it stops being a story about the variation and becomes more about possible patterns in submissions like this."
   },
 
   lic_story: {
     type: "end",
     kind: "story",
-    title: "This is the licensing story",
-    lead: "Reviews and contested applications exist because somebody with standing has said the premises is causing a problem — crime, disorder, underage sales, noise, public nuisance. The complaint is already documented and the parties are already identified.",
+    title: "This could be an interesting licensing story",
+    lead: "Reviews and contested applications exist because somebody with standing has said the premises are the cause of or risk creating a problem; crime, disorder, underage sales, noise, public nuisance. The complaint is already documented and the parties are already identified.",
     actions: [
       "Council licensing team — ask for the review application and the supporting papers.",
       "Police licensing unit — are they the applicant, or have they made a representation?",
@@ -132,16 +132,16 @@ var NODES = {
       "The licensee, always. They have a right of reply and they will have a version you haven't heard.",
       "Check the agenda page for whether the hearing is open to the public, and go if it is."
     ],
-    tail: "The decision is only half of it. The grounds are the story."
+    tail: "The decision is only half of it. Who, what and why are the story."
   },
 
   lic_diarise: {
     type: "end",
     kind: "routine",
     title: "Routine for now — put it in the diary",
-    lead: "Nothing to write today. The value here is entirely in coming back.",
+    lead: "Nothing to write today. Revisit when the time is right.",
     actions: [
-      "Diarise the deadline for representations and the hearing date if you have one.",
+      "Put the deadline for representations and the hearing date if you have one in your diary.",
       "Set a second reminder a few days before the hearing, when the agenda papers usually go up.",
       "If the premises is in an area with form — late-night economy, student housing, a residents' group that campaigns — flag it to whoever keeps the patch list."
     ]
@@ -387,7 +387,8 @@ var NODES = {
       "Talk to whoever complained. They usually have dates, photographs and a case reference the council would not give you.",
       "Establish when the works were finished. Immunity runs to 10 years where substantial completion was on or after 25 April 2024, and 4 years where it was before."
     ],
-    tail: "This branch is the reason the flowchart exists. Every tool on the other branches is a way of reading documents somebody chose to publish. This one is reporting."
+    tail: "This branch is the reason the flowchart exists. Every tool on the other branches is a way of reading documents somebody chose to publish. This one is reporting.",
+    bookRef: "Planning rules do allow for changes without permission. Your source may not know this. See Chapter 15 of Morrison."
   },
 
   lic_conditions: {

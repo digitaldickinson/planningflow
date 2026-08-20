@@ -23,6 +23,10 @@
     });
   }
 
+  function bookRefHtml(text) {
+    return '<p class="book-ref"><span class="book-ref-label">Ref</span>' + text + "</p>";
+  }
+
   /* =========================================================
      RENDER
      ========================================================= */
@@ -54,6 +58,7 @@
       html += "</span></button>";
     });
     html += "</div>";
+    if (node.bookRef) html += bookRefHtml(node.bookRef);
     html += '<div class="step-nav">' + stepNavHtml() + "</div>";
     stage.innerHTML = html;
 
@@ -84,6 +89,7 @@
       });
       html += "</div>";
     }
+    if (node.bookRef) html += bookRefHtml(node.bookRef);
     html += '<div class="step-nav">';
     html += '<button class="primary" type="button" id="btn-next">Next</button>';
     html += stepNavHtml();
@@ -120,6 +126,7 @@
       html += "</ul>";
     }
     if (node.tail) html += '<h3>And</h3><p class="lead" style="margin-bottom:0">' + esc(node.tail) + "</p>";
+    if (node.bookRef) html += bookRefHtml(node.bookRef);
     html += "</div>";
 
     var judgements = state.path.filter(function (p) { return p.judgement; });

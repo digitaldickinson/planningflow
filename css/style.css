@@ -163,6 +163,26 @@ button[aria-pressed="true"] { background: var(--ink); color: #fff; border-color:
 }
 .back-inline:hover { color: var(--ink); border-color: transparent; text-decoration: underline; }
 
+/* ---------- book reference note ---------- */
+.book-ref {
+  margin: 14px 0 0;
+  padding: 10px 14px;
+  border-left: 3px solid var(--accent);
+  background: var(--paper);
+  color: var(--sub);
+  font-size: 0.85rem;
+  max-width: 58ch;
+}
+.book-ref .book-ref-label {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 3px;
+}
+
 /* ---------- reference photo ---------- */
 .ref-photo { margin: 0 0 18px; max-width: 420px; }
 .ref-photo img {
