@@ -19,7 +19,8 @@ var NODES = {
     options: [
       { label: "Yes — someone says the rules are being broken", note: "Unauthorised works, a build that doesn't match the drawings, ignored conditions, trading outside permitted hours.", to: "breach_which" },
       { label: "No — this is a proposal, application or decision", note: "Something going through the system rather than round it and it coulc be interesting.", to: "notice" }
-    ]
+    ],
+    bookRef: "Possible Morrison?"
   },
 
   notice: {
@@ -30,7 +31,8 @@ var NODES = {
     options: [
       { label: "Yes — I'm standing in front of one", note: "Photograph it, including the small print and the dates.", to: "colour" },
       { label: "No — I'm searching speculatively", note: "Nothing physical yet. Start from the portals.", to: "which" }
-    ]
+    ],
+    bookRef: "Possible Morrison?"
   },
 
   colour: {
@@ -52,7 +54,8 @@ var NODES = {
         to: "plan_notice",
         judgement: "You read the notice and decided what it actually was. Colour narrowed it; the wording settled it.You checked the dates to make sure it was in scope"
       }
-    ]
+    ],
+    bookRef: "Possible Morrison?"
   },
 
   /* ---------- licensing, from a notice ---------- */
@@ -71,7 +74,8 @@ var NODES = {
       { key: "borough", label: "Borough" },
       { key: "repdate", label: "Deadline for representations (from the notice)" }
     ],
-    to: "lic_type"
+    to: "lic_type",
+    bookRef: "Possible Morrison?"
   },
 
   lic_type: {
@@ -83,7 +87,8 @@ var NODES = {
       { label: "Review", note: "Somebody with standing has asked for the licence to be reconsidered.", to: "lic_story" },
       { label: "Variation", note: "An existing licence being changed — hours, capacity, layout, conditions.", to: "lic_variation" },
       { label: "New application", note: "A new premises licence being sought.", to: "lic_calendar" }
-    ]
+    ],
+    bookRef: "Possible Morrison?"
   },
 
   lic_calendar: {
@@ -92,7 +97,8 @@ var NODES = {
     body: "Open that borough's own committee calendar — democracy.&lt;council&gt;.gov.uk and find the licensing sub-committee or hearing panel. No aggregator exists for licensing, so this is a borough-by-borough crawl. Agenda papers normally appear on the meeting page ahead of the hearing rather than on the day.",
     q: "Find the hearing on the borough's committee calendar",
     capture: [{ key: "hearing", label: "Hearing date, if listed" }],
-    to: "lic_objections"
+    to: "lic_objections",
+    bookRef: "Possible Morrison?"
   },
 
   lic_objections: {
@@ -103,7 +109,8 @@ var NODES = {
     options: [
       { label: "Yes — representations have been lodged", note: "The papers will usually name who objected and on what grounds.", to: "lic_story" },
       { label: "No, or the papers aren't up yet", note: "Nothing to hang a story on today.", to: "lic_diarise", judgement: "You decided 'no objections yet' rather than 'no story ever'. Those are different, and only the diary tells them apart." }
-    ]
+    ],
+    bookRef: "Possible Morrison?"
   },
 
   lic_variation: {
@@ -116,7 +123,8 @@ var NODES = {
       "Ask the licensing team whether this premises has a history — previous representations, warnings, review applications.",
       "Ring the nearest residents' association or the ward councillor and ask if anyone has noticed."
     ],
-    tail: "If it has history, it stops being a story about the variation and becomes more about possible patterns in submissions like this."
+    tail: "If it has history, it stops being a story about the variation and becomes more about possible patterns in submissions like this.",
+    bookRef: "Possible Morrison?"
   },
 
   lic_story: {
@@ -132,7 +140,8 @@ var NODES = {
       "The licensee, always. They have a right of reply and they will have a version you haven't heard.",
       "Check the agenda page for whether the hearing is open to the public, and go if it is."
     ],
-    tail: "The decision is only half of it. Who, what and why are the story."
+    tail: "The decision is only half of it. Who, what and why are the story.",
+    bookRef: "Possible Morrison?"
   },
 
   lic_diarise: {
@@ -144,7 +153,8 @@ var NODES = {
       "Put the deadline for representations and the hearing date if you have one in your diary.",
       "Set a second reminder a few days before the hearing, when the agenda papers usually go up.",
       "If the premises is in an area with form — late-night economy, student housing, a residents' group that campaigns — flag it to whoever keeps the patch list."
-    ]
+    ],
+    bookRef: "Possible Morrison?"
   },
 
   /* ---------- planning, from a notice ---------- */
@@ -163,7 +173,8 @@ var NODES = {
       { key: "site", label: "Site address" },
       { key: "deadline", label: "Comment deadline on the notice" }
     ],
-    to: "plan_lookup"
+    to: "plan_lookup",
+    bookRef: "Possible Morrison?"
   },
 
   plan_lookup: {
@@ -171,7 +182,8 @@ var NODES = {
     eyebrow: "Planning",
     q: "Look the reference up",
     body: "Try <a href=\"https://www.planningalerts.app\" target=\"_blank\" rel=\"noopener\">PlanningAlerts.app</a> first — free, and it covers 9 of Greater Manchester's 10 boroughs. Salford is the one it does not cover, so for Salford go straight to the borough's own planning portal. Either way, read the officer's report and the objections rather than just the summary line.",
-    to: "plan_contentious"
+    to: "plan_contentious",
+    bookRef: "Possible Morrison?"
   },
 
   plan_contentious: {
@@ -182,7 +194,8 @@ var NODES = {
     options: [
       { label: "Yes — one of those applies", note: "Or the comments section is already filling up.", to: "plan_story", judgement: "You judged this contentious. No field in any database says 'contentious' — you decided it, and you should be able to say why." },
       { label: "No — it's routine", note: "Householder extensions, signage, changes of use nobody minds.", to: "plan_filler", judgement: "You judged this routine. Worth being honest that 'routine' sometimes means 'nobody has noticed yet'." }
-    ]
+    ],
+    bookRef: "Possible Morrison?"
   },
 
   plan_story: {
@@ -198,7 +211,8 @@ var NODES = {
       "Cross-check designations on <a href=\"https://www.planning.data.gov.uk\" target=\"_blank\" rel=\"noopener\">planning.data.gov.uk</a> — listed building, conservation area, greenbelt, flood risk.",
       "The committee date, and whether the meeting is webcast."
     ],
-    tail: "Two dates matter: the comment deadline, and the committee meeting. Miss the first and your readers cannot act on the story."
+    tail: "Two dates matter: the comment deadline, and the committee meeting. Miss the first and your readers cannot act on the story.",
+    bookRef: "Possible Morrison?"
   },
 
   plan_filler: {
@@ -210,7 +224,8 @@ var NODES = {
       "Note the case officer's name and the comment deadline.",
       "Diarise a check just before the deadline to see whether objections landed.",
       "If it is one of several similar applications in the same ward, the pattern is the story, not the application."
-    ]
+    ],
+    bookRef: "Possible Morrison?"
   },
 
   /* ---------- speculative search ---------- */
@@ -222,7 +237,8 @@ var NODES = {
     options: [
       { label: "Planning", note: "Applications, appeals, designations.", to: "plan_alerts" },
       { label: "Licensing", note: "Premises licences, variations, reviews.", to: "lic_crawl" }
-    ]
+    ],
+    bookRef: "Possible Morrison?"
   },
 
   plan_alerts: {
@@ -231,7 +247,8 @@ var NODES = {
     q: "Set a postcode or ward alert",
     body: "<a href=\"https://www.planningalerts.app\" target=\"_blank\" rel=\"noopener\">PlanningAlerts.app</a> lets you browse or subscribe by postcode or ward, free. It covers 9 of the 10 Greater Manchester boroughs — not Salford, which needs its own portal. Alerts are the only version of this that works on a slow week, because they arrive whether or not you remember to look.",
     capture: [{ key: "patch", label: "Postcode or ward you're watching" }],
-    to: "plan_flagged"
+    to: "plan_flagged",
+    bookRef: "Possible Morrison?"
   },
 
   plan_flagged: {
@@ -242,7 +259,8 @@ var NODES = {
     options: [
       { label: "Yes — something stands out", note: "Scale, sensitive location, or a familiar objector name.", to: "plan_designations", judgement: "You spotted it in a list that gave you no help. That is local knowledge doing the work, not the search." },
       { label: "No — nothing obvious", note: "Which may just mean nothing has been submitted yet.", to: "appeal_q" }
-    ]
+    ],
+    bookRef: "Possible Morrison?"
   },
 
   plan_designations: {
@@ -250,7 +268,8 @@ var NODES = {
     eyebrow: "Planning",
     q: "Cross-check the designations",
     body: "<a href=\"https://www.planning.data.gov.uk\" target=\"_blank\" rel=\"noopener\">planning.data.gov.uk</a> will confirm listed building, conservation area, greenbelt and flood-risk status for the site. It does not track live applications, appeals or licensing — it is for verifying what the site <em>is</em>, not what is happening to it.",
-    to: "plan_story"
+    to: "plan_story",
+    bookRef: "Possible Morrison?"
   },
 
   appeal_q: {
@@ -261,7 +280,8 @@ var NODES = {
     options: [
       { label: "Yes — chasing an appeal outcome", note: "Or looking for precedent that a similar scheme was allowed.", to: "appeal_search" },
       { label: "No", note: "Nothing live and nothing refused.", to: "plan_filler" }
-    ]
+    ],
+    bookRef: "Possible Morrison?"
   },
 
   appeal_search: {
@@ -270,7 +290,8 @@ var NODES = {
     q: "Search the appeal decisions",
     body: "<a href=\"https://www.planningprecedent.co.uk\" target=\"_blank\" rel=\"noopener\">planningprecedent.co.uk</a> gives free full-text search of every England appeal decision, no login. The Planning Inspectorate's own Appeals Casework Portal is the official source but needs a case reference. Full-text search is the useful one for finding precedent by wording rather than by case number.",
     capture: [{ key: "appeal", label: "Appeal or case reference" }],
-    to: "plan_story"
+    to: "plan_story",
+    bookRef: "Possible Morrison?"
   },
 
   lic_crawl: {
@@ -279,7 +300,8 @@ var NODES = {
     q: "Crawl the boroughs one at a time",
     body: "There is no aggregator for licensing. Go to democracy.&lt;council&gt;.gov.uk or the borough's Modern.gov calendar and look for the licensing sub-committee or hearing panel. Ten boroughs, ten calendars. Bookmark all ten once and this becomes a ten-minute job rather than an afternoon.",
     capture: [{ key: "borough", label: "Borough you're checking" }],
-    to: "lic_scheduled"
+    to: "lic_scheduled",
+    bookRef: "Possible Morrison?"
   },
 
   lic_scheduled: {
@@ -290,7 +312,8 @@ var NODES = {
     options: [
       { label: "Yes", note: "Open the agenda and read the papers.", to: "lic_objections" },
       { label: "No", note: "Quiet week in that borough.", to: "lic_diarise" }
-    ]
+    ],
+    bookRef: "Possible Morrison?"
   },
 
   /* ---------- the dead end that isn't ---------- */
@@ -302,7 +325,8 @@ var NODES = {
     options: [
       { label: "Planning", note: "Building works, extensions, change of use, signage, site operations.", to: "breach_history" },
       { label: "Licensing", note: "Hours, noise, capacity, door staff, alcohol sales, outdoor areas.", to: "lic_conditions" }
-    ]
+    ],
+    bookRef: "Possible Morrison?"
   },
 
   breach_history: {
@@ -315,7 +339,8 @@ var NODES = {
       { key: "ref", label: "Reference of any permission you find" },
       { key: "permitted", label: "What the permission actually allowed" }
     ],
-    to: "breach_compare"
+    to: "breach_compare",
+    bookRef: "Possible Morrison?"
   },
 
   breach_compare: {
@@ -341,7 +366,8 @@ var NODES = {
         to: "breach_none",
         judgement: "You searched and found nothing. Absence of a record is not evidence of wrongdoing, and treating it as such is the most common way this story goes wrong."
       }
-    ]
+    ],
+    bookRef: "Possible Morrison?"
   },
 
   breach_departure: {
@@ -357,7 +383,8 @@ var NODES = {
       "Ask when the works were substantially completed. Enforcement is time-limited: within 10 years where substantial completion took place on or after 25 April 2024, but only 4 years where it took place before that date. 'The council can no longer act' is itself the story.",
       "Put it to the owner or developer, with the drawing number, and give them a real opportunity to respond."
     ],
-    tail: "The likeliest innocent explanation is an amendment you haven't found. Rule it out before you publish, not after."
+    tail: "The likeliest innocent explanation is an amendment you haven't found. Rule it out before you publish, not after.",
+    bookRef: "Possible Morrison?"
   },
 
   breach_conditions_end: {
@@ -371,7 +398,8 @@ var NODES = {
       "If a condition is being breached, that is enforceable by a breach of condition notice, which is a different instrument from an enforcement notice. Ask the council which, if either, they have served.",
       "If nothing is being breached, say so and move on. Not every complaint is a story."
     ],
-    tail: "Condition breaches are the least glamorous and most reliably true planning stories on any patch."
+    tail: "Condition breaches are the least glamorous and most reliably true planning stories on any patch.",
+    bookRef: "Possible Morrison?"
   },
 
   breach_none: {
@@ -401,7 +429,8 @@ var NODES = {
       { key: "borough", label: "Borough" },
       { key: "licence", label: "Licence number, if the register gives one" }
     ],
-    to: "lic_breach_check"
+    to: "lic_breach_check",
+    bookRef: "Possible Morrison?"
   },
 
   lic_breach_check: {
@@ -412,7 +441,8 @@ var NODES = {
     options: [
       { label: "Yes — it's outside what the licence permits", note: "Trading later, louder, or bigger than the conditions allow.", to: "lic_breach", judgement: "You read the conditions and decided the premises is outside them. Licence conditions are drafted loosely and licensees read them generously — expect a fight over interpretation." },
       { label: "No, or the licence covers it", note: "The activity is permitted, whatever the neighbours think of it.", to: "lic_notbreach" }
-    ]
+    ],
+    bookRef: "Possible Morrison?"
   },
 
   lic_breach: {
@@ -428,7 +458,8 @@ var NODES = {
       "Check whether the activity was covered by a temporary event notice, which sits on the same register and is the most common innocent explanation.",
       "Put it to the licensee. They have a right of reply and often a document you haven't seen."
     ],
-    tail: "The enforcement history is the harder half and usually needs an FOI. The licence itself is free and immediate."
+    tail: "The enforcement history is the harder half and usually needs an FOI. The licence itself is free and immediate.",
+    bookRef: "Possible Morrison?"
   },
 
   lic_notbreach: {
@@ -441,7 +472,8 @@ var NODES = {
       "A change in how the premises is used — restaurant to bar, say — may be a planning matter rather than a licensing one.",
       "If residents are unhappy with a lawfully operating premises, the story may be the licensing policy itself: cumulative impact, saturation, late-night levy.",
       "Diarise it. Repeated complaints about a compliant premises is a pattern, and patterns are where the review applications come from."
-    ]
+    ],
+    bookRef: "Possible Morrison?"
   }
 };
 
